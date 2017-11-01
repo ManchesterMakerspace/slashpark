@@ -21,7 +21,7 @@ var route = {
             if(req.body){
                 res.status(200).send('https://cam.pinesec.org/parking/front/image.jpg');res.end();             // ACK notification
                 console.log(JSON.stringify(req.body, null, 4));
-                slack.send('https://cam.pinesec.org/parking/front/image.jpg', req.body.channel_name);
+                slack.send('https://cam.pinesec.org/parking/front/image.jpg', req.body.user_name);
             }
         };
     }
