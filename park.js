@@ -1,19 +1,19 @@
 // park.js ~ Copyright 2017 Manchester Makerspace ~ MIT License
 
-/* var slack = {
+var slack = {
     webhook: require('@slack/client').IncomingWebhook,   // url to slack intergration called "webhook" can post to any channel as a "bot"
     URL: process.env.SLACK_WEBHOOK_URL,
-    santaSend: function(msg, channel){
+    send: function(msg, channel){
         properties = {
-            username: 'Santa',
+            username: 'Camera Bot',
             channel: channel,
-            iconEmoji: ':santa:'
+            iconEmoji: ':camera:'
         };
-        if(channel === 'privategroup'){properties.channel = 'santas_little_helper';}
-        var santa = new slack.webhook(slack.URL, properties);
-        santa.send(msg);
+        if(channel === 'privategroup'){properties.channel = 'test_channel';}
+        var sendObj = new slack.webhook(slack.URL, properties);
+        sendObj.send(msg);
     }
-}; */
+};
 
 var route = {
     park: function(){
@@ -21,7 +21,7 @@ var route = {
             if(req.body){
                 res.status(200).send('https://cam.pinesec.org/parking/front/image.jpg');res.end();             // ACK notification
                 console.log(JSON.stringify(req.body, null, 4));
-                // slack.santaSend(req.body.text, req.body.channel_name);
+                slack.send('https://cam.pinesec.org/parking/front/image.jpg', req.body.channel_name);
             }
         };
     }
