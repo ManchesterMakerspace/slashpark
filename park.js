@@ -16,12 +16,12 @@ var slack = {
 };
 
 var route = {
-    park: function(){
+    park: function(camLink){
         return function(req, res){
             if(req.body){
                 res.status(200).send('ermm');res.end();             // ACK notification
                 console.log(JSON.stringify(req.body, null, 4));
-                slack.send('https://cam.pinesec.org/parking/front/image.jpg', '@' + req.body.user_name);
+                slack.send(camLink, '@' + req.body.user_name);
             }
         };
     }
@@ -36,7 +36,8 @@ var serve = {                                                // handles express 
         serve.app.use(serve.parse.json());                   // support JSON bodies
         serve.app.use(serve.parse.urlencoded({extended: true})); // idk, something was broken maybe this fixed it
         serve.router = serve.express.Router();               // create express router object to add routing events to
-        serve.router.post('/park', route.park());          // Don't ask
+        serve.router.post('/park', route.park('https://cam.pinesec.org/parking/front/image.jpg'));               // front street cam
+        serve.router.post('/parking', route.park('https://cam.pinesec.org/parking/side-rear/image.jpg'));    // side street cam
         serve.app.use(serve.router);                         // get express to user the routes we set
         return http;
     }
